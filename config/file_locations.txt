@@ -1,0 +1,8 @@
+# Specify the file name in the dotfiles subdirectory on the left and the
+# destination path on the right, separated by whitespace. The destination path
+# should be the relative path to the destination from the home directory (i.e.,
+# a destination of .preview will end up ~/.preview).
+
+macosx.profile    .profile
+tmux.conf         .tmux.conf
+vimrc             .vimrc
