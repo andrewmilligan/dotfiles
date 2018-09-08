@@ -1,0 +1,3 @@
+Found in a post here: https://www.reddit.com/comments/6lokhi
+Related dotfiles: https://github.com/tudurom/dotfiles
+Color scheme: https://github.com/tudurom/dotfiles/blob/master/x/.xres/colors/cyber
