@@ -4,6 +4,9 @@ CONFIG_DIR=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 DIR=$(cd "$CONFIG_DIR" && cd .. && pwd)
 FILE_LOCATIONS="$CONFIG_DIR/file_locations_macosx.txt"
 DOTFILES="$DIR/dotfiles"
+PKGTOOLS="$DIR/pkgsrc/bin"
+
+BIN_DIR="$HOME/bin"
 
 function is_location {
   if echo "$1" | grep -q '^[[:blank:]]*\#.*$'; then
@@ -15,6 +18,7 @@ function is_location {
   return 0
 }
 
+# Link the dotfiles
 while read LINE; do
   if is_location "$LINE"; then
     read -ra FILES <<<"$LINE"
@@ -33,6 +37,12 @@ while read LINE; do
   fi
 
 done < "$FILE_LOCATIONS"
+
+# Link the bin files
+for TOOL in "$PKGTOOLS"/*; do
+  TOOL_NAME=`basename "$TOOL"`
+  ln -s "$TOOL" "$BIN_DIR/$TOOL_NAME"
+done
 
 echo "All links created."
 

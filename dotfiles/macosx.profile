@@ -28,3 +28,5 @@ export VIMRC="$HOME/.vimrc"
 export TERMINAL_PROFILE="$TERMINAL_PROFILE"
 
 export PATH="/Users/andrew/pkg/bin:$PATH:/Users/andrew/bin"
+
+export PKGSRC="$HOME/pkgsrc"

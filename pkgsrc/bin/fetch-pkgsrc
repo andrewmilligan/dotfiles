@@ -1,0 +1,9 @@
+#!/bin/bash
+
+PKGSRC_FILENAME="pkgsrc.tar.gz"
+PKGSRC_URL="http://ftp.netbsd.org/pub/pkgsrc/stable/$PKGSRC_FILENAME"
+
+cd "$HOME"
+wget "$PKGSRC_URL" || exit 1
+tar -xzf "$PKGSRC_FILENAME" || exit 1
+rm "$PKGSRC_FILENAME"

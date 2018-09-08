@@ -1,0 +1,58 @@
+#!/bin/bash
+#
+# install-pkg
+# 
+# This script can be used in two ways:
+#
+# 1. Navigate to a single package's directory and invoke this script with the
+#    argument "install", which will record the package in the installed list
+#    and install and clean.
+# 2. Invoke this script with a single command line argument "reload", which
+#    will reinstall all of the packages in the installed packages list.
+#
+
+PKG_VAR="$HOME/var/pkgsrc"
+mkdir -p "$PKG_VAR"
+PKG_LIST="$PKG_VAR/installed_packages.txt"
+
+ADD_NAME=
+
+case "$1" in
+  install)
+    PKG_DIR="$PWD"
+    PKG_NAME="${PWD#$PKGSRC/}"
+
+    touch "$PKG_LIST"
+
+    ESC_PN="${PKG_NAME//\//\\/}"
+    if awk '/^'"$ESC_PN"'$/{f=1; exit} END{exit !f}' "$PKG_LIST"; then
+      echo "Package $PKG_NAME already in list of installed packages."
+      read -r -p "Proceed anyway? [y/N] " response
+      case "$response" in
+        [yY][eE][sS]|[yY])
+          echo "Proceeding with installation."
+          ;;
+        *)
+          exit
+          ;;
+      esac
+    else
+      ADD_NAME=1
+    fi
+
+    if bmake install clean-depends clean; then
+      if [[ $ADD_NAME ]]; then
+        echo "$PKG_NAME" >> "$PKG_LIST"
+      fi
+    fi
+    ;;
+
+  reload)
+    echo "Unfortunately, realoading is not yet implemented."
+    ;;
+
+  *)
+    echo "Usage: install-pkg <install | reload>"
+    ;;
+
+esac

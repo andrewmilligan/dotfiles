@@ -1,0 +1,35 @@
+#!/bin/bash
+
+if [[ $# -ne 1 ]]; then
+  echo "Usage: ./bootstrap.sh <pkgsrc_dir>"
+fi
+
+PKGSRC_DIR="$1"
+BOOTSTRAP_DIR="$PKGSRC_DIR/bootstrap"
+CMD="./bootstrap --abi 64 --unprivileged"
+
+echo "$BOOTSTRAP_DIR"
+if ! [[ "$BOOTSTRAP_DIR" =~ "/*" ]]; then
+  BOOTSTRAP_DIR="$PWD/$BOOTSTRAP_DIR"
+fi
+
+echo "Bootstrap directory: $BOOTSTRAP_DIR"
+
+if ! [[ -x "$BOOTSTRAP_DIR/bootstrap" ]]; then
+  echo "Error: can't find bootstrap executable."
+  exit 1
+fi
+
+echo "This will run: '$CMD' in the above directory."
+echo
+read -r -p "Are you sure? [y/N] " response
+case "$response" in
+  [yY][eE][sS]|[yY])
+    echo
+    cd "$BOOTSTRAP_DIR"
+    eval "$CMD"
+    ;;
+  *)
+    exit
+    ;;
+esac
