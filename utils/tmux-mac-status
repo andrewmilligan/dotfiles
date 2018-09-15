@@ -1,0 +1,68 @@
+#!/bin/bash
+
+AP=`airport -I`
+SSID=`echo "$AP" | grep " SSID" | sed -e 's/^.*: //g'`
+SIGNAL=`echo "$AP" | grep "CtlRSSI" | sed -e 's/^.*: //g'`
+
+BATT_INFO=`pmset -g batt | grep "InternalBattery"`
+BATT=`echo "$BATT_INFO" | sed -e 's/^.*\([0-9][0-9][0-9]\)%;.*/\1/'`
+
+if [[ $SIGNAL -lt -80 ]]; then
+  SIG_LVL=1
+elif [[ $SIGNAL -lt -70 ]]; then
+  SIG_LVL=2
+elif [[ $SIGNAL -lt -67 ]]; then
+  SIG_LVL=3
+else
+  SIG_LVL=4
+fi
+
+if [[ $BATT -lt 25 ]]; then
+  BATT_LVL=1
+elif [[ $BATT -lt 50 ]]; then
+  BATT_LVL=2
+elif [[ $BATT -lt 75 ]]; then
+  BATT_LVL=3
+else
+  BATT_LVL=4
+fi
+
+case "$1" in
+  color)
+    FILL_BAR='\033[01;93m|\033[00m'
+    UNFILL_BAR='\033[01;90m|\033[00m'
+    ;;
+  tmux-color)
+    FG_FILL="${2:-colour11}"
+    FG_UNFILL="${3:-colour8}"
+    FILL_BAR="#[fg=$FG_FILL]|#[default]"
+    UNFILL_BAR="#[fg=$FG_UNFILL]|#[default]"
+    ;;
+  *)
+    FILL_BAR='|'
+    UNFILL_BAR=' '
+    ;;
+esac
+
+SIG=''
+BATT=''
+for i in `seq 4`; do
+  if [[ $SIG_LVL -ge $i ]]; then
+    SIG+="$FILL_BAR"
+  else
+    SIG+="$UNFILL_BAR"
+  fi
+
+  if [[ $BATT_LVL -ge $i ]]; then
+    BATT+="$FILL_BAR"
+  else
+    BATT+="$UNFILL_BAR"
+  fi
+done
+
+BATT_DISP="Battery: $BATT"
+WIFI_DISP="No WiFi"
+if [[ $SSID ]]; then
+  WIFI_DISP="$SSID: $SIG"
+fi
+echo "$BATT_DISP  $WIFI_DISP"
