@@ -101,6 +101,9 @@ let g:solarized_termtrans=1
 " in ~/.vim/colors/ and uncomment:
 " colorscheme solarized
 
+" Easily toggle paste mode
+set pastetoggle=<leader>v
+
 
 " Custom configuration based on terminal profile
 let iterm_profile = $ITERM_PROFILE
