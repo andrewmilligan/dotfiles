@@ -6,6 +6,9 @@ filetype off
 
 " TODO: load plugins here
 
+" Set runtime path to include bundle directory
+set runtimepath^=~/.vim/bundle/vim-es6-2.1
+
 " Turn on syntax highlighting
 syntax on
 
@@ -40,6 +43,11 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 set noshiftround
+
+autocmd Filetype python setlocal expandtab tabstop=2 shiftwidth=2
+autocmd Filetype python highlight Comment ctermfg=2
+autocmd Filetype javascript highlight Comment ctermfg=2
+augroup filetype javascript syntax=javascript
 
 " Cursor motion
 set scrolloff=3

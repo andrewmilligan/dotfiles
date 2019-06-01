@@ -6,3 +6,4 @@
 macosx.profile    .profile
 tmux.conf         .tmux.conf
 vimrc             .vimrc
+gitconfig         .gitconfig

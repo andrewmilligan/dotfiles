@@ -1,7 +1,7 @@
 # Uncomment for default PS1 setting:
 #export PS1="\h:\W \u\$"
 #export PS1='\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
-export PS1='\[\033[01;91m\]\u\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\] \$ '
+export PS1='\[\033[01;91m\]\u\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
 
 
 # Colorize ls output
