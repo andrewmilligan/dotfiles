@@ -104,6 +104,8 @@ let g:solarized_termtrans=1
 " Easily toggle paste mode
 set pastetoggle=<leader>v
 
+" Other filetypes
+au BufRead,BufNewFile *.thor set filetype=ruby
 
 " Custom configuration based on terminal profile
 let iterm_profile = $ITERM_PROFILE
